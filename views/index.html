@@ -1,0 +1,92 @@
+<html>
+<head>
+  <title>Image Search Abstraction Layer</title>
+  <link rel="icon" type="image/png" href="https://cdn.freecodecamp.org/universal/favicons/favicon-16x16.png" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/public/style.css">
+  <script src="/public/client.js"></script>
+  <style>
+  body{
+    padding : 30px;
+  }
+  </style>
+</head>
+<body>
+  <h2>Image Search Abstraction Layer</h2>
+  <br/>
+  <hr/>
+  <br/>
+  <p>Search the web for images or see recent searches</p>
+  <form>
+    <label for="searchOpt">Type of Search</label>
+    <select id="searchOpt">
+      <option value="query">Search for Images</option>
+      <option value="recent">See Recent Searches</option>
+    </select>
+    <br/>
+    <br/>
+    <br/>
+    <label for="queryBox">Query : </label><input id='queryBox' type='text'>
+    <br/>
+    <label for="pageBox">Page : </label><input id='pageBox' type='text' value=1>
+    <br/>
+    <label for="sizeOpt">Image Size : </label>
+    <select id="sizeOpt">
+      <option value="All">all</option>
+      <option value="ICON">icon</option>
+      <option value="SMALL">small</option>
+      <option value="MEDIUM">medium</option>
+      <option value="LARGE">large</option>
+      <option value="XLARGE">xlarge</option>
+      <option value="XXLARGE">xxlarge</option>
+      <option value="XXLARGE">huge</option>
+    </select>
+    <br/>
+    <br/>
+    <label>Here's your url: </label><a id='url' target='_blank' href=#>https://thp-04-build-an-image-search-abstraction-layer.wongyc-66.repl.co/</a>
+  </form>
+  <footer>
+    <p>Designed and coded by YC Wong</p>
+  </footer>
+</body>
+  
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('input, select').forEach(x => {
+      // console.log(x)
+      x.addEventListener('input', updateUrl)
+    })
+  })
+
+  function updateUrl(e){
+    console.log('updateUrl ...')
+    let queryString = 'https://thp-04-build-an-image-search-abstraction-layer.wongyc-66.repl.co/'
+    
+    if(document.querySelector('#searchOpt').value == 'recent'){
+      document.querySelector('#queryBox').disabled = true;
+      document.querySelector('#pageBox').disabled = true;
+      document.querySelector('#sizeOpt').disabled = true;
+      queryString += 'recent/'
+      
+    } else {
+      document.querySelector('#queryBox').disabled = false;
+      document.querySelector('#pageBox').disabled = false;
+      document.querySelector('#sizeOpt').disabled = false;
+      if(document.querySelector('#queryBox').value == '') return
+      queryString += 'query/' + document.querySelector('#queryBox').value
+      queryString += '?page=' + document.querySelector('#pageBox').value 
+      if(document.querySelector('#sizeOpt').value != 'All'){
+        queryString += '&size=' + document.querySelector('#sizeOpt').value
+      }
+    }
+    // console.log(queryString)
+    document.querySelector('#url').innerHTML = queryString
+    document.querySelector('#url').setAttribute('href', queryString)
+    
+  }
+</script>
+
+</html>
+
+
